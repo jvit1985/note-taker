@@ -30,16 +30,15 @@ app.get('*', (req, res) => {
 
 //get api request to read db.json file and return all saved notes as JSON
 app.get('/api/notes', (req, res) => {
-    fs.readFile('./Deveop/db/db.json', 'utf-8', (err, data) => {
-        if (err) {
-            console.log(`Error reading file: ${err}`);
-        } else {
-            const databaseNotes = JSON.parse(data);
-            databaseNotes.forEach(db => {
-                console.log(`${db.title}: ${db.text}`);
-            });
-        }
-    });
+    if(title && text) {
+        existingNotes.forEach(db => {
+            console.log(`${db.title}: ${db.text}`);
+        });
+    
+        res.json(`${req.method} request received to get notes`);
+    } else {
+        res.json('Error in getting notes');
+    }
 });
 
 //post api request that receives a new note to save on the request body, add it to the db.json file and then return the new note to the client. Needs a unique id when it's saved.
