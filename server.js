@@ -3,7 +3,7 @@ const {v4 : uuidv4} = require('uuid');
 const path = require('path');
 const fs = require('fs');
 
-const existingNotes = require('./db/db');
+const existingNotes = require('./db/db.json');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -20,14 +20,14 @@ app.get('/api/notes', (req, res) => {
 //post api request that receives a new note to save on the request body, add it to the db.json file and then return the new note to the client. Needs a unique id when it's saved.
 app.post('/api/notes', (req, res) => {
     const {title, text} = req.body;
-    const noteId = uuidv4();
+    const id = uuidv4();
 
     if (title && text) {
     
     const newNote = {
         title,
         text,
-        noteId,
+        id,
     };
 
     let filePath = path.join(__dirname, "/db/db.json");
