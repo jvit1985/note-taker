@@ -44,6 +44,22 @@ app.post('/api/notes', (req, res) => {
 });
     
 //Delete api notes id, should receive a query parameter containing the id of a note to delete. In order to delete a note you'll need to read all notes from the db.json file, remove the note with the given id property and then rewrite the notes to the db.json file
+app.delete('/api/notes/:noteId', (req, res) => {
+    let filePath = path.join(__dirname, '/db/db.json');
+    for (i=0; i<existingNotes.length; i++) {
+        if (existingNotes[i].noteId == req.params.id) {
+            existingNotes.splice(i, 1);
+            break;
+        }
+    }
+    fs.writeFileSync(filePath, JSON.stringify(existingNotes), (err) => {
+        if(err) {
+            console.log(err);
+        }
+        console.log('Note was deleted');
+    });
+    res.json(existingNotes);
+});
 
 //get request to return notes.html file
 app.get('/notes', (req, res) => {
