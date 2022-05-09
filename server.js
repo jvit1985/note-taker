@@ -51,7 +51,7 @@ app.post('/api/notes', (req, res) => {
     notes = [...notes, newNote];
     const noteString = JSON.stringify(notes, null, 2);
 
-    fs.writeFile(`./Develop/db/db.json`, noteString, (err) => 
+    fs.writeFile(`./db/db.json`, noteString, (err) => 
         err
             ? console.error(err)
             : console.log(
@@ -75,12 +75,12 @@ app.post('/api/notes', (req, res) => {
 
 //get request to return notes.html file
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 //get request to return index.html file
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+    res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.listen(PORT, () => {
